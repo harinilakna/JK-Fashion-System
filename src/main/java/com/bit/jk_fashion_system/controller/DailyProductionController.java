@@ -34,8 +34,8 @@ public class DailyProductionController {
     @Autowired
     private PrivilegeController privilegeController;
 
-    @Autowired
-    private UserDao userDao;
+    // @Autowired
+    // private UserDao userDao;
 
     @Autowired
     private ProductDao productDao;
@@ -48,6 +48,9 @@ public class DailyProductionController {
 
     @Autowired
     private ProductionOrderStatusDao productionOrderStatusDao;
+
+     @Autowired
+     private ProductStatusDao productstatusDao;
       
     //create mapping ui service[/material -- return material ui]
     @RequestMapping
@@ -83,7 +86,7 @@ public class DailyProductionController {
   //create post mapping for save employee record
   @PostMapping
   public String save(@RequestBody DailyProduction production) {
-//        log.info("Production Order: {}", production);
+
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
       HashMap<String, Boolean> logUserPrivi = privilegeController.getPrivilegeByUserModule(auth.getName(), "purchase_order");
@@ -91,7 +94,6 @@ public class DailyProductionController {
           return "Insert Not completed: You haven't Privilege";
       }
 
-      User logedUser = userDao.getUserByUserName(auth.getName());
       try {
           // item, production order
           Product itemDetails = productDao.getReferenceById(production.getProduct_id().getId());
@@ -121,7 +123,7 @@ public class DailyProductionController {
           // inner list eke thyena object ekakata one by one by main object eka set kra
           for (ProductionOrderHasMaterial prorderhasMat : productionOrder.getProductionOrderMaterialtList()) {
               prorderhasMat.setProduction_order_id(productionOrder);
-//              log.info("prorderhasMat {}", prorderhasMat);
+
           }
 
           productionOrderDao.save(productionOrder);
@@ -130,10 +132,11 @@ public class DailyProductionController {
           // item stock eka up wena eka
           Product extitemStock = productDao.getReferenceById(itemDetails.getId());
 
-          if (extitemStock != null) { // if a stock is already there
+          if (extitemStock != null ) { // if a stock is already there
               Integer availableQty = extitemStock.getAvailable_quantity();
               if (availableQty != null) {
                   extitemStock.setAvailable_quantity(extitemStock.getAvailable_quantity() + (production.getQuantity()));
+                //   extitemStock.setProduct_status_id(productstatusDao.getReferenceById(1));
               }
 
               // save material stock dao

@@ -130,6 +130,10 @@ const reFreshProductForm = () => {
     productStatusList = ajaxGetRequest("/productstatus/findall");
     fillDataIntoSelect(selectStatus, 'Select Status *', productStatusList, 'name','Out-of-Stock');
 
+     // Bind selected status to product
+    product.product_status_id = JSON.parse(selectStatus.value);
+    selectStatus.style.border = '2px solid green';
+
     // GET GENDER LIST
    genderList = ajaxGetRequest("/gender/findall");
     fillDataIntoSelect(selectGender, 'Select Gender*', genderList, 'name');
@@ -213,7 +217,7 @@ const refillProductForm =(rowOb,rowInd)=>{
     fillDataIntoSelect( selectProductCategory, 'Select Category *', productCategoryList,'name', product.product_category_id.name);
 
     // select status
-    fillDataIntoSelect( selectStatus, 'Select Status *', ProductStatusList, 'name', product.productStatus.name);
+    fillDataIntoSelect( selectStatus, 'Select Status *', productStatusList, 'name', product.product_status_id.name);
 
        // GET Gender list
     fillDataIntoSelect(selectGender, 'Select Gender*', genderList, 'name',product.gender_id.name );

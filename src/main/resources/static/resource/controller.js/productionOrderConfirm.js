@@ -240,7 +240,7 @@ const buttonProConfirmAdd = () => {
             // hide modal
             $("#modalProductionConfirmForm").modal("hide");
 
-            refreshProductionOrderTable(); //Refresh the pr order table
+            refreshProductionOrderConfirmTable(); //Refresh the pr order table
 
             //Refresh static elements
             formProductionConfirm.reset();

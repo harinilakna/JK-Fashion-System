@@ -20,7 +20,7 @@ import com.bit.jk_fashion_system.dao.ProductStatusDao;
 import com.bit.jk_fashion_system.dao.UserDao;
 import com.bit.jk_fashion_system.entity.Product;
 import com.bit.jk_fashion_system.entity.ProductHasMaterial;
-
+import com.bit.jk_fashion_system.entity.ProductionOrder;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -106,6 +106,7 @@ public class ProductController {
          } else {
             product.setCode(nextProductNo);
          }
+        
          
 
             for(ProductHasMaterial PO : product.getProductMaterialList()){
@@ -194,15 +195,8 @@ public class ProductController {
     //get available material list
       @GetMapping(value="/availableproductlist" , produces = "application/json")
     public List<Product> getAvailableProduct(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        HashMap<String,Boolean> logUserPrivi = privilegeController.getPrivilegeByUserModule(auth.getName() ,"product");
-        if(!logUserPrivi.get("select")){
-            return null;
-        }
-
     return productDao.getAvailableProduct();
     }
-
 
 
     @GetMapping(value="/listproductbyproductionorder/{productionId}" , produces = "application/json")

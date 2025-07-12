@@ -20,10 +20,10 @@ const refreshDailyProductionTable = () =>{
     fillDataIntoDailyProduction(tableDailyProduction, dailyProductionList ,displayProperty , printDailyProduction, true, userPrivilege);
 
     $("#tableDailyProduction").dataTable({
-        destroy:true,
-        responsive: true,
-        scrollX: true,
-        scrollY: '300px'
+        retrieve: true,
+    responsive: true,
+    scrollX: true,
+    scrollY: '300px'
     });
 
    
@@ -154,10 +154,11 @@ const dailyProductionAdd = () =>{
                 alert('Save Successfully......!' );
                 //need to refresh table and form
                 // refreshPOderTable();
-                $('#modalDailyProductionForm').modal('hide');
+                refreshDailyProductionTable();
                 formDailyProduction.reset();
-                 refreshDailyProductionTable();
-            reFreshDailyProductionForm();
+                reFreshDailyProductionForm();
+                $('#modalDailyProductionForm').modal('hide');
+                  
                 //need to hide modal
             } else {
                 alert('Save Not Successful....! Have Some Errors \n' + serverResponse);

@@ -220,7 +220,8 @@ const checkError = () => {
 const buttonProAdd = () =>{
 
     //1.need to check form errors --> checkError()
-    let formErrors = checkError()
+    let formErrors = checkError();
+
     if (formErrors == '') {
 
         //2.need to get user confirmation
@@ -349,8 +350,11 @@ const refreshInnerProductionOrder = () =>{
     proproduct = {};
     oldproproduct = null;
 
-    productList = ajaxGetRequest("/product/availablelist" + JSON.parse(selectProduct.value).id );
-    fillDataIntoSelect( selectProduct, 'Select Product', [], 'name');
+    productList = ajaxGetRequest("/product/availablelist");
+            fillDataIntoSelect( selectProduct, 'Select Product', productList, 'name');
+
+    // productList = ajaxGetRequest("/product/availableproductlist");
+    // fillDataIntoSelect( selectProduct, 'Select Product', [], 'name');
 
     textProductQuantity.value = '';
     textProductQuantity.style.border = '1px solid #ced4da';
@@ -379,7 +383,7 @@ const innerTableRefill = (rowOb, index) => {
    
 
        if (selectProduct.value != "") {
-              productList = ajaxGetRequest("/product/availablelist" + JSON.parse(selectProduct.value).id );
+              productList = ajaxGetRequest("/product/availableproductlist");
             fillDataIntoSelect( selectProduct, 'Select Product', productList, 'name',rowOb.product_id.name);
         } else {
             fillDataIntoSelect( selectProduct, 'Select Product', [], 'name',rowOb.product_id.name);

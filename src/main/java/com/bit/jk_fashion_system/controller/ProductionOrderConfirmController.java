@@ -90,27 +90,27 @@ public class ProductionOrderConfirmController {
             }
 
             ProductionOrder savedProOrder = proDao.save(prductionOrder);
-            log.info("saved production order status : {}", savedProOrder.getProduction_order_status_id().getName());
+            // log.info("saved production order status : {}", savedProOrder.getProduction_order_status_id().getName());
 
             // need to down the inventoty
             if (savedProOrder.getProduction_order_status_id().getId() == 3) {
 
 
-                log.info("coming to id statement");
-                log.info("coming list : {}", prductionOrder.getProductionOrderMaterialtList());
+                // log.info("coming to id statement");
+                // log.info("coming list : {}", prductionOrder.getProductionOrderMaterialtList());
 
                 for (ProductionOrderHasMaterial productionOrderHasMaterial : prductionOrder.getProductionOrderMaterialtList()) {
                     Material material = materialDao.getReferenceById(productionOrderHasMaterial.getMaterial_id().getId());
-                    log.info("material");
+                    // log.info("material");
 
                     Integer exMaterialStock = material.getAvailable_quantity();
                     material.setAvailable_quantity(exMaterialStock - productionOrderHasMaterial.getRequired_quantity());
 
-                    log.info("material qtys : existQty {} | requiredQty {}",exMaterialStock, productionOrderHasMaterial.getRequired_quantity());
+                    // log.info("material qtys : existQty {} | requiredQty {}",exMaterialStock, productionOrderHasMaterial.getRequired_quantity());
 
                     // save material stock dao
                     materialDao.save(material);
-                    log.info("new quantity : {}", material.getAvailable_quantity() );
+                    // log.info("new quantity : {}", material.getAvailable_quantity() );
                 }
 
             }
