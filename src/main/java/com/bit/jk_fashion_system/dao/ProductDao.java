@@ -24,7 +24,7 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
     public List<Product> getProductByporderId(Integer productionId);
 
 
-       @Query(value = "SELECT p From Product p where p.product_status_id.id=1")
+    @Query(value = "SELECT p From Product p where p.product_status_id.id=1")
     public List<Product>getAvailableProduct();
 
     
