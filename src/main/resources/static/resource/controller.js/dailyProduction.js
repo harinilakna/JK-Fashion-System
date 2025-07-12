@@ -10,7 +10,7 @@ window.addEventListener('load',()=>{
 // get data into table
 const refreshDailyProductionTable = () =>{
 
-    dailyProductionList = ajaxGetRequest("/daily-production/findall");
+    dailyProductionList = ajaxGetRequest("/dailyproduction/findall");
 
     const displayProperty = [
         {property:getProductionOrder, datatype:'function'},
@@ -20,10 +20,10 @@ const refreshDailyProductionTable = () =>{
     fillDataIntoDailyProduction(tableDailyProduction, dailyProductionList ,displayProperty , printDailyProduction, true, userPrivilege);
 
     $("#tableDailyProduction").dataTable({
-        retrieve: true,
-    responsive: true,
-    scrollX: true,
-    scrollY: '300px'
+        destroy:true,
+        responsive: true,
+        scrollX: true,
+        scrollY: '300px'
     });
 
    
@@ -63,23 +63,29 @@ const reFreshDailyProductionForm = () => {
 }
 
 const filterProduct = () => {
-
+    console.log("filterProduct called");
     products = ajaxGetRequest("/product/listproductbyproductionorder/" + JSON.parse(selectProductionOrder.value).id);
     fillDataIntoSelect(selectProduct, 'Select Product', products, 'name');
+
+    console.log("products selected: " + selectProduct.value);
 }
 
 const filterQuantity = () => {
-
+    console.log("filterQuantity called");
     let qty = ajaxGetRequest("/production-has-product/quantity?poId=" + JSON.parse(selectProductionOrder.value).id + "&itemId=" + JSON.parse(selectProduct.value).id);
+
+    console.log("qty: " + qty);
     let requiredqty = qty.order_quantity;
     let completedqty = qty.completed_quantity;
-
-    productionQty.value = parseInt(order_quantity) - parseInt(completed_quantity);
+    console.log("qty required: " + requiredqty);
+    productionQty.value = parseInt(requiredqty) - parseInt(completedqty);
 
     dailyProduct.quantity = productionQty.value;
     if(new RegExp("^[1-9][0-9]{0,5}$").test(productionQty.value)){
         productionQty.style.border = '2px solid green'
     }
+
+    dailyProduct.product = qty.product_id;
 }
 
 const checkQty = () => {
@@ -89,7 +95,7 @@ const checkQty = () => {
     let completedqty = qty.completed_quantity;
     let enteredqty = productionQty.value;
 
-    let balanceqty = parseInt(order_quantity) - parseInt(completed_quantity);
+    let balanceqty = parseInt(requiredqty) - parseInt(completedqty);
 
     if (parseInt(enteredqty) > (parseInt(balanceqty))) {
         alert("Amount is exceeded");
@@ -141,7 +147,8 @@ const dailyProductionAdd = () =>{
             // call ajaxRequestBody Function
             //ajaxRequestBody("/url" , "METHOD", object)
             let serverResponse = ajaxRequestBody("/dailyproduction", "POST", dailyProduct);
-
+            console.log("serverResponse method calling: " + serverResponse);
+            console.log("request send daily product: " + dailyProduct);
             //4.check backend response
             if (serverResponse == 'OK') {
                 alert('Save Successfully......!' );
@@ -150,7 +157,7 @@ const dailyProductionAdd = () =>{
                 $('#modalDailyProductionForm').modal('hide');
                 formDailyProduction.reset();
                  refreshDailyProductionTable();
-    reFreshDailyProductionForm();
+            reFreshDailyProductionForm();
                 //need to hide modal
             } else {
                 alert('Save Not Successful....! Have Some Errors \n' + serverResponse);

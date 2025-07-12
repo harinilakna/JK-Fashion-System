@@ -26,7 +26,7 @@ public class ProductionHasProductController {
     //create get mapping for gget employee all data[material/findall]
 
      @GetMapping(value="/quantity",  params = {"poId", "itemId"}, produces = "application/json")
-    public List<ProductionOrderHasProduct> getProductByProductionOrder(@RequestParam("poId") int poId, @RequestParam("itemId") int itemId){
+    public ProductionOrderHasProduct getProductByProductionOrder(@RequestParam("poId") int poId, @RequestParam("itemId") int itemId){
     return productionHasProductDao.getQuntityByProductAndPoId(poId, itemId);
     }
 

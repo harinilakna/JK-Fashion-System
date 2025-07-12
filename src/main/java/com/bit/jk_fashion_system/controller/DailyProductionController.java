@@ -1,6 +1,10 @@
 package com.bit.jk_fashion_system.controller;
 
 import java.util.List;
+
+import com.bit.jk_fashion_system.dao.*;
+import com.bit.jk_fashion_system.entity.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
@@ -15,18 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bit.jk_fashion_system.dao.DailyProductionDao;
-import com.bit.jk_fashion_system.dao.PoStatusDao;
-import com.bit.jk_fashion_system.dao.PurchaseOrderDao;
-import com.bit.jk_fashion_system.dao.UserDao;
-import com.bit.jk_fashion_system.entity.DailyProduction;
-import com.bit.jk_fashion_system.entity.PurchaseOrder;
-import com.bit.jk_fashion_system.entity.PurchaseOrderHasMaterial;
-
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
-
+@Slf4j
 @RestController
 //class level mapping
 @RequestMapping( "/dailyproduction")
@@ -40,6 +36,18 @@ public class DailyProductionController {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private ProductDao productDao;
+
+    @Autowired
+    private ProductionOrderDao productionOrderDao;
+
+    @Autowired
+    private DailyProductionDao dailyProductionDao;
+
+    @Autowired
+    private ProductionOrderStatusDao productionOrderStatusDao;
       
     //create mapping ui service[/material -- return material ui]
     @RequestMapping
@@ -74,109 +82,68 @@ public class DailyProductionController {
     
   //create post mapping for save employee record
   @PostMapping
-  public String save(@RequestBody DailyProduction dailyPO){
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    HashMap <String,Boolean> logUserPrivi = privilegeController.getPrivilegeByUserModule(auth.getName() ,"purchase_order");
-    if(!logUserPrivi.get("insert")){
-        return "Insert Not completed: You haven't Privilege";
-    }  
-     try{
-          //checking unique value
-        if (dailyPO.getId() != null) {
-            DailyProduction extQR = dailyPoDao.getReferenceById(dailyPO.getId());
-            if (extQR != null) {
-                return "Save not Completed: Insert Daily production order Already exists....!";
-            }
-        }
-       
-        dailyPO.setCreated_at(LocalDateTime.now());//set current date and time
-      
-        
-        //set log user value without er connection
-        // porder.setAddeduser(userDao.getUserByUserName(auth.getName()).getId());
+  public String save(@RequestBody DailyProduction production) {
+//        log.info("Production Order: {}", production);
 
-         
-          //we blocked the purchase order for itterative reading so we shout set the value in post
-dailyPoDao.save(dailyPO);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+      HashMap<String, Boolean> logUserPrivi = privilegeController.getPrivilegeByUserModule(auth.getName(), "purchase_order");
+      if (!logUserPrivi.get("insert")) {
+          return "Insert Not completed: You haven't Privilege";
+      }
 
+      User logedUser = userDao.getUserByUserName(auth.getName());
+      try {
+          // item, production order
+          Product itemDetails = productDao.getReferenceById(production.getProduct_id().getId());
+          ProductionOrder productionOrder = productionOrderDao.getReferenceById(production.getProduction_order_id().getId());
+          dailyProductionDao.save(production);
+
+          Boolean completeState = true;
+          // prohasid eke completed qty up wena eka
+          for (ProductionOrderHasProduct pohid : productionOrder.getProductionOrderProductList()) {
+              if (pohid.getProduct_id().getId() == itemDetails.getId()) {
+                  pohid.setCompleted_quantity(pohid.getCompleted_quantity() + production.getQuantity());
+              }
+              if (pohid.getOrder_quantity() != pohid.getCompleted_quantity()) {
+                  completeState = false;
+              }
+
+              pohid.setProduction_order_id(productionOrder);
+          }
+
+          // status change krnwa
+          if (completeState) {
+              productionOrder.setProduction_order_status_id(productionOrderStatusDao.getReferenceById(6)); // completed
+          } else {
+              productionOrder.setProduction_order_status_id(productionOrderStatusDao.getReferenceById(2)); // In Production
+          }
+
+          // inner list eke thyena object ekakata one by one by main object eka set kra
+          for (ProductionOrderHasMaterial prorderhasMat : productionOrder.getProductionOrderMaterialtList()) {
+              prorderhasMat.setProduction_order_id(productionOrder);
+//              log.info("prorderhasMat {}", prorderhasMat);
+          }
+
+          productionOrderDao.save(productionOrder);
+
+          //*Means it's an internal order */
+          // item stock eka up wena eka
+          Product extitemStock = productDao.getReferenceById(itemDetails.getId());
+
+          if (extitemStock != null) { // if a stock is already there
+              Integer availableQty = extitemStock.getAvailable_quantity();
+              if (availableQty != null) {
+                  extitemStock.setAvailable_quantity(extitemStock.getAvailable_quantity() + (production.getQuantity()));
+              }
+
+              // save material stock dao
+              productDao.save(extitemStock);
+          }
+          production.setCreated_at(LocalDateTime.now());
           return "OK";
-
-      }catch (Exception e){
-         return "Save Not Completed:" + e.getMessage();
-      } 
-    }
-
-//        //define mapping for update qr
-//     @PutMapping
-//     public String update(@RequestBody PurchaseOrder porder){
-
-//         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//         HashMap <String,Boolean> logUserPrivi = privilegeController.getPrivilegeByUserModule(auth.getName() ,"purchase_order");
-//         if(!logUserPrivi.get("update")){
-//             return "Update Not completed: You haven't Privilege";
-//         }  
-//         try{
-//         //checking duplicate records
-//         PurchaseOrder extQrId  = poDao.getReferenceById(porder.getId());
-//         if(extQrId == null){
-//             return "Update not Completed : quottaion request is not exist";
-//         }
-      
-   
-//         porder.setUpdated_at(LocalDateTime.now());//set updated date and time
-//         porder.setUpdated_user(userDao.getUserByUserName(auth.getName()).getId());
-
-          
-//           //we blocked the purchase order for itterative reading so we shout set the value in post
-
-
-//           for(PurchaseOrderHasMaterial PO : porder.getPorderHasMaterialList()){
-//             PO.setPurchase_order_id(porder);
-//         }
-//         poDao.save(porder);
-//              //check shop status
-//            if(porder.getPurchase_order_status_id().getName().equals("Cancel")){
-//             return "Quotation request is canceled";
-//            }
-//           return "OK";
-
-//        }catch(Exception e){
-//            return "Update Not complete: " + e.getMessage();
-//        }
-//     }
-
-
-//     //define serve mapping for delete request
-//       @DeleteMapping
-//       public String delete(@RequestBody PurchaseOrder porder){
-
-//         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//         HashMap <String,Boolean> logUserPrivi = privilegeController.getPrivilegeByUserModule(auth.getName() ,"purchase_order");
-//         if(!logUserPrivi.get("delete")){
-//             return "Delete Not completed: You haven't Privilege";
-//         }  
-//         try{
-  
-//             PurchaseOrder extQR  = poDao.getReferenceById(porder.getId());
-//         if(extQR == null){
-//             return "Delete not Completed";
-//         }
-  
-//         extQR.setPurchase_order_status_id(postatusDao.getReferenceById(2));
-//         porder.setDeleteduser(userDao.getUserByUserName(auth.getName()).getId());
-//         extQR.setDeleted_at(LocalDateTime.now());
-//         poDao.save(extQR);
-//               return "OK";
-//           }catch(Exception e){
-//               return "Delete not Completed :" + e.getMessage();
-//           }
-//       }
-
-
-//  @GetMapping(value="/listPObysupplier/{supid}" , produces = "application/json")
-//     public List<PurchaseOrder> getAllPoDataBysupplier(@PathVariable("supid")Integer supid){
-//     return poDao.getPurchaseOrderBySupplier(supid);
-//     }
-
+      } catch (Exception e) {
+          return "Save Not Completed:" + e.getMessage();
+      }
+  }
 
 }

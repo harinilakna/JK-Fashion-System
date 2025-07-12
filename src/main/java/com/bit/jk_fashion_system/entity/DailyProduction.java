@@ -2,6 +2,8 @@ package com.bit.jk_fashion_system.entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -26,7 +28,7 @@ public class DailyProduction {
     private Integer quantity;  // save product vise daily qty
 
    @Column(name = "created_at")
-    @NotNull
+    @CreationTimestamp
     private LocalDateTime created_at;
 
     @ManyToOne
@@ -35,5 +37,5 @@ public class DailyProduction {
 
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private Product product;
+    private Product product_id;
 }

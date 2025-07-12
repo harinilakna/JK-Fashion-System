@@ -21,15 +21,14 @@ const refreshProductionOrderTable = () =>{
 
     fillDataIntoTable(tableProduction, productionOrderList ,displayProperty ,refillProductionForm, deleteProductionOrder, printProduction, true, userPrivilege);
 
+    // $("#ProductionOrderTable").dataTable({
+    //     destroy:true,
+    //     responsive: true,
+    //     // scrollX: true,// Enable horizontal scrollbar
+    //     scrollY: 300 // Enable vertical scrollbar with a height of 200 pixels
+    // });
 
-    // $("#tableProduction").dataTable();
-
-        $('#tableProduction').DataTable({
-          retrieve: true,
-    responsive: true,
-    scrollX: true,
-    scrollY: '300px'
-    });
+    $("#tableProduction").dataTable();
 
     //disable delete button
     productionOrderList.forEach((element, index) => {
@@ -98,7 +97,7 @@ const getStatus = (rowOb) =>{
 
     // get active Product list
     productList = ajaxGetRequest("/product/availablelist");
-    fillDataIntoSelectInnerForm( selectProduct, 'Select Product *', productList,'name','code');
+    fillDataIntoSelect( selectProduct, 'Select Product *', productList, 'name');
 
     // Submitted is Initial State
     productionOrderStatusList = ajaxGetRequest("/productionorderstatus/findall");
@@ -125,6 +124,9 @@ const getStatus = (rowOb) =>{
         btnAddProrder.disabled = "true";
         $("#btnAddProrder").css("cursor","not-allowed");
     }
+
+    // Refresh Inner Production order form and table
+    refreshInnerProductionOrder();
 
     //set min value and max value
     let currentDate = new Date();
@@ -155,9 +157,6 @@ const getStatus = (rowOb) =>{
         maxMonth = '0' + maxMonth;
     }
     textRequiredDate.max = maxDate.getFullYear()+ '-' + maxMonth+ '-' + maxDay;
-
-     // Refresh Inner Production order form and table
-    refreshInnerProductionOrder();
  }
 
 // //create refill function
@@ -206,9 +205,9 @@ const checkError = () => {
         errors = errors + 'please Select required Date...! \n';
     }
 
-    if ( productionOrder.productionOrderProductList.length == 0) {
-            errors = errors + 'please Add Product...! \n';           
-        }
+    // if ( productionOrder.productionOrderProductList.length == 0) {
+    //         errors = errors + 'please Add Product...! \n';           
+    //     }
 
 
 

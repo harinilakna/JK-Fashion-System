@@ -21,10 +21,10 @@ const refreshProductionOrderConfirmTable = () =>{
     fillDataIntoOrderConfirmation(tableProductionConfirm, productionOrderList ,displayProperty ,refillConfirmForm, true, userPrivilege);
 
     $("#tableProductionConfirm").dataTable({
-         retrieve: true,
-    responsive: true,
-    scrollX: true,
-    scrollY: '300px'
+        destroy:true,
+        responsive: true,
+        // scrollX: true,// Enable horizontal scrollbar
+        scrollY: 300 // Enable vertical scrollbar with a height of 200 pixels
     });
 
   
@@ -80,6 +80,7 @@ const refillConfirmForm =(rowOb,rowInd)=>{
     $('#modalProductionConfirmForm').modal('show');
 
     productionOrder = JSON.parse(JSON.stringify(rowOb));
+    console.log("production order: " + productionOrder);
     oldProductionOrder = JSON.parse(JSON.stringify(rowOb));
 
     textRequiredDate.value = productionOrder.required_date;
@@ -118,7 +119,9 @@ const refillConfirmForm =(rowOb,rowInd)=>{
         let extIndex = productionOrder.productionOrderMaterialtList.map(itm => itm.material_id.id).indexOf(allMatObj.material_id.id);
         console.log("material list check for allMatobj loop + "  + productionOrder.productionOrderMaterialtList)
         if (extIndex != -1) {
-            productionOrder.productionOrderMaterialtList[extIndex].required_quantity = productionOrder.prodOrderMaterialtList[extIndex].required_quantity + allMatObj.qty;
+//            productionOrder.productionOrderMaterialtList[extIndex].required_quantity = productionOrder.prodOrderMaterialtList[extIndex].required_quantity + allMatObj.qty;
+                productionOrder.productionOrderMaterialtList[extIndex].required_quantity = productionOrder.productionOrderMaterialtList[extIndex].required_quantity + allMatObj.qty;
+
         } else {
             let proOHm = new Object();
             proOHm.material_id = allMatObj.material_id;
@@ -132,13 +135,13 @@ const refillConfirmForm =(rowOb,rowInd)=>{
         materialInventory = ajaxGetRequest("/material/listbyproduct/" + productionOrder.productionOrderMaterialtList[index].material_id.id);
 
         if (materialInventory != "") {
-            productionOrder.productionOrderMaterialtList[index].available_quantity = materialInventory.quantity;
+            productionOrder.productionOrderMaterialtList[index].available_quantity = materialInventory.available_quantity;
         }
     }
 
     let columnsMaterials = [
         {property: getMaterailName, datatype: 'function'},
-        {property: 'available_quantity', datatype: 'string'},
+        {property: 'required_quantity', datatype: 'string'},
         {property: 'available_quantity', datatype: 'string'},
     ]
     // refresh inner Table
@@ -175,7 +178,10 @@ const refillConfirmForm =(rowOb,rowInd)=>{
     }
     selectStatus.classList.add("is-valid");
     productionOrder.production_order_status_id = JSON.parse(selectStatus.value);
-
+    // FIX: Assign the status object directly
+//        productionOrder.production_order_status_id = productionOrderStatusList.find(
+//            status => status.name === selectStatus.value
+//        );
     productionOrder.note = textNote.value;
 
 }
@@ -211,10 +217,11 @@ const innerTableDelete = (rowOb, index) => {
 }
 
 
-const buttonProductionOrderConfirmation = () => {
-
+const buttonProConfirmAdd = () => {
+     console.log("production order: " + productionOrder.production_order_status_id.id);
     //If status is Not Approved
     if (productionOrder.production_order_status_id.id == 4) {
+
         productionOrder.productionOrderMaterialtList = [];
     }
 

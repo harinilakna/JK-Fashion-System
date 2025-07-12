@@ -216,9 +216,9 @@ public class ProductionOrderController {
 //     return poDao.getPurchaseOrderBySupplier(supid);
 //     }
 
- @GetMapping(value="/productionOrderByApproved/" , produces = "application/json")
-    public List<ProductionOrder> getAllApprovedProduction(@PathVariable("statusid")Integer statusid){
-    return proDao.getApprovedProductionOrders(statusid);
+    @GetMapping(value="/productionOrderByApproved" , produces = "application/json")
+    public List<ProductionOrder> getAllApprovedProduction(){
+    return proDao.getApprovedProductionOrders();
     }
 
 

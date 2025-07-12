@@ -17,6 +17,6 @@ public interface ProductionOrderDao extends JpaRepository<ProductionOrder, Integ
     String getNextCode();
 
     @Query(value = "SELECT po FROM ProductionOrder po WHERE po.production_order_status_id.id IN (2, 3, 5)")
-    List<ProductionOrder> getApprovedProductionOrders(Integer statusid);
+    List<ProductionOrder> getApprovedProductionOrders();
 
 }
