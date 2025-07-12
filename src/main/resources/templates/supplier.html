@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head th:replace =" ~{ common/header :: moduleHeaderFragment }">
+
+  </head>
+  <body>
+    <div class="container-fluid">
+        <div class="row">
+          <nav th:replace =" ~{ common/sidebar :: sidebarFragment }"></nav>
+            <div class="col-md-9 ml-sm-auto col-lg-10">
+            <div class="row">
+              <nav th:replace =" ~{ common/topnavbar :: topnavbarFragment }">
+                </div>
+                <div class="row content">
+                  <main  class="col-md-3 ml-sm-auto col-lg-12" style="height: 100vh;">
+        
+                    <div class="d-flex justify-content-md-end flex-wrap flex-md-nowrap align-items-center mt-4 pt-3 pb-2 mb-3 border-bottom">
+                      <button type="button" class="btn btn-Add btn-sm" data-bs-toggle="modal" data-bs-target="#modalSupplierAddForm" >Add Supplier</button>
+                      <i class="fa-solid fa-print fa-xl ms-4" style="color: #0a1324;"></i>
+                    </div>
+                    <div class="card">
+                      <div class="card-body">
+                          <div class="table table-responsive">
+                              <table class="display nowrap" style="width:100%" id="tableSupplier">
+                                  <thead>
+                                      <tr>
+                                          <th>Id</th>
+                                          <th>Sup No</th>
+                                          <th>Business Reg No</th>
+                                          <th>Name</th>
+                                          <th>Address</th>
+                                          <th>Contact person</th>
+                                          <th>Contact No</th>
+                                          <th>Email</th>
+                                          <th>Materials</th>
+                                          <th>Bank Name</th>
+                                          <!-- <th>Account No<th>  -->
+                                          <th>Branch Name</th>
+                                          <th>Account Name</th> 
+                                          <th>Status</th>
+                                          <th class="action-button">Action</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                   
+                  </main>
+                </div>
+              </div>
+            
+                <div class="modal" id="modalSupplierAddForm" data-bs-backdrop="static" data-bs-keyboard="false">
+                  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                      <div class="modal-content">
+                          <div class="modal-header fw-bold"><h6>Supplier Details</h6>
+                             <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button> 
+                          </div>
+                          <div class="modal-body">
+                            <form onsubmit ="return false" id="formSupplier">
+                               
+                                <div class="row mt-1 ">
+                                  <div class="col-12 text-end">
+                                   <span class="fw-bold"><span class ="text-danger">*</span>Required</span>
+                                  </div>
+                              </div>
+                              <div class="row mb-3">
+                                <div class="col">
+                                   <label for="textbrn" class="form-label fw-bold">Business Reg No:</label>
+
+                                    <input  type="text" class="form-control" placeholder="Business registration No*" id="textbrn"  
+                                    onkeyup ="textFeildValidator(textbrn ,'^[A-Z]{2}[\\s][0-9]{8}$','supplier','brn') ;">
+                                  </div>     
+                             
+                                <div class="col">
+                                    <label for="textSupplierName" class="form-label fw-bold">Supplier Name: <span class="text-danger">  *</span></label>
+
+                                  <input  type="text" class="form-control" placeholder="Supplier Name*" id="textSupplierName"  
+                                  onkeyup ="textFeildValidator(textSupplierName ,'^(([A-Z][a-z]{3,20}[\\s])+([A-Z][a-z]{3,20}){1})$','supplier','name') ;" required >
+                                </div>                           
+                              </div>
+                              <div class="row mb-3">
+                                <div class="col">
+                                 <label for="textSupAddress" class="form-label fw-bold">Address: <span class="text-danger">*</span></label>
+
+                                    <input  type="text" class="form-control" placeholder="Address*" id="textSupAddress"  
+                                    onkeyup ="textFeildValidator(textSupAddress ,'^.*$','supplier','address') ;" required >
+                                  </div>   
+                                <div class="col">
+                                   <label for="textEmail" class="form-label fw-bold">Email: <span class="text-danger">*</span></label>
+
+                                  <input type="email" class="form-control" placeholder="Email*"  id="textEmail" required  
+                                  onkeyup="textFeildValidator(textEmail ,'^[A-Za-z0-9]{6,20}[@][a-z]{3,10}[.][a-z]{2,3}$','supplier','email')">
+                                </div>
+                              </div>
+                              <div class="row mb-3">
+                                <div class="col">
+                                   <label for="textContactPerson" class="form-label fw-bold">Contact person name: <span class="text-danger">*</span></label>
+
+                                    <input  type="text" class="form-control" placeholder="Contact person Name*" id="textContactPerson"  
+                                    onkeyup ="textFeildValidator(textContactPerson ,'^(([A-Z][a-z]{3,20}[\\s])+([A-Z][a-z]{3,20}){1})$','supplier','contact_person') ;" required >
+                                  </div>  
+                                <div class="col">
+                                    <label for="textContactNo" class="form-label fw-bold">Contact person Number: <span class="text-danger">*</span></label>
+
+                                  <input type="text" class="form-control" placeholder="Contact Person No*" id="textContactNo" required onkeyup="textFeildValidator(textContactNo ,'^[0][7][012345678][0-9]{7}$','supplier','contact_no')">
+                                </div>
+                              </div>
+                              <div class="row mb-3">
+                                <div class="col">
+                                     <label for="textCompanyContact" class="form-label fw-bold">Company Contact: <span class="text-danger">*</span></label>
+
+                                  <input type="text" class="form-control" placeholder="Company Contact Number" id="textCompanyContact" onkeyup="textFeildValidator(textCompanyContact,'^[0][123456789][0-9]{8}$','supplier','company_contact')">
+                                </div>
+                             
+                              <div class="col">
+                                 <label for="selectSupplierStatus" class="form-label fw-bold">Status: <span class="text-danger">*</span></label>
+
+                                <select id="selectSupplierStatus" class="form-control"  onchange="selectDFeildValidator(selectSupplierStatus,'','supplier','supplier_status_id')" style="width: 100%;" required>
+                                </select>
+                              </div>
+
+                              </div>
+                              <div class="mb-3">
+                                 <label for="textNote" class="form-label fw-bold">Note:</label>
+
+                                <textarea class="form-control" rows="3" placeholder="Note" id="textNote" onkeyup ="textFeildValidator(textNote ,'^.*$','supplier','note')" ></textarea>
+                              </div>
+                              <div class="mb-3">
+                              <h6>Suppler payment details</h6>
+                              <hr>
+                              </div>
+                              <div class="row mb-3">
+                                <div class="col">
+                                    <label for="textBankName" class="form-label fw-bold">Bank Name: <span class="text-danger">*</span></label>
+
+                                    <input  type="text" class="form-control" placeholder="Bank name*" id="textBankName"  
+                                    onkeyup ="textFeildValidator(textBankName ,'^(([A-Z][a-z]{3,20}[\\s])+([A-Z][a-z]{3,20}){1})$','supplier','bank_name') ;" >
+                                  </div>     
+                             
+                                <div class="col">
+                                   <label for="textBankNo" class="form-label fw-bold">Bank Account No: <span class="text-danger">*</span></label>
+
+                                  <input  type="text" class="form-control" placeholder="Bank Account No*" id="textBankNo"  
+                                  onkeyup ="textFeildValidator(textBankNo ,'^[0-9]{8,20}$','supplier','account_no') ;" > 
+                                  <!-- \d: Matches any digit (0-9) -->
+                                </div>                           
+                              </div>
+                              <div class="row mb-3">
+                                <div class="col">
+                                    <label for="textBranchName" class="form-label fw-bold">Branch Name: <span class="text-danger">*</span></label>
+
+                                    <input  type="text" class="form-control" placeholder="Branch Name*" id="textBranchName"  
+                                    onkeyup ="textFeildValidator(textBranchName ,'^(([A-Z][a-z]{3,20}[\\s])+([A-Z][a-z]{3,20}){1})$','supplier','branch_name') ;" >
+                                  </div>     
+                             
+                                <div class="col">
+                                   <label for="textAccountName" class="form-label fw-bold">Account No: <span class="text-danger">*</span></label>
+
+                                  <input  type="text" class="form-control" placeholder="Account Name*" id="textAccountName"  
+                                  onkeyup ="textFeildValidator(textAccountName ,'^(([A-Z][a-z]{3,20}[\\s])+([A-Z][a-z]{3,20}){1})$','supplier','account_name') ;" > 
+                                  <!-- \d: Matches any digit (0-9) -->
+                                </div>                           
+                              </div>
+
+                              <div class="row mb-3">
+                                <!--all item--> 
+                                <div class="col-6">
+                                   <label for ="selectAllMaterial">All Materials</label>
+                                   
+                                   <select class="form-select"  multiple id="selectAllMaterial">
+                                       
+                                   </select>
+                                  </div>
+                                   <!--buttons--> 
+                                   <div class="col-1">
+                                    <button type="button" class="btn btn-sm btn-light mb-1" onclick="btnAddOneMaterial()"> > </button>
+                                    <button type="button" class="btn btn-sm btn-light mb-1" onclick="btnAddAllMaterial()"> >> </button>
+                                    <button type="button" class="btn  btn-sm btn-light mb-1" onclick="btnRemoveOneMaterial()"> < </button>
+                                    <button type="button" class="btn  btn-sm btn-light mb-1" onclick="btnRemoveAllMaterial()"> << </button>
+                                    </div>
+                                   <!--Selected items--> 
+                                  <div class="col-5"> 
+                                   <label for ="selectSupplierMaterial">Selected Material<span class="text-danger">*</span></label>
+                                   <select class="form-select"  multiple  id="selectSupplierMaterial">
+                                       
+                                   </select>
+                                  </div>
+                                 
+                               </div>      
+                                 
+                              <div class="d-grid gap-2 d-md-block">
+                                <button class="btn btn-md btn-addTable"  type="submit" id="btnAddSupplier" onclick="buttonSupplierAdd()">Add</button>
+                                <button class="btn btn-md btn-updTable" type="submit" id="btnUpdateSupplier" onclick="buttonSupplierUpdate()">Update</button>
+                                <button class="btn btn-md btn-delTable"  type="reset">Clear</button>
+                              </div>
+                            </form>
+                          </div>
+                      </div>
+                  </div>
+          
+              </div>
+    <script src="resource/js/sidebar.js"></script>
+          
+    <script  src ="resource/controller.js/supplier.js" type="text/javascript"></script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <nav class="navbar" th:fragment="topnavbarFragment" >
+    <div class="d-flex col-12 col-md-3 col-lg-2 mb-2 mb-lg-0 flex-wrap flex-md-nowrap justify-content-between">
+
+     <!-- TOGGLE BUTTON FOR SIDEBAR -->
+      <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+     </div> 
+     <div class="col-12 col-md-5 col-lg-8 d-flex align-items-center justify-content-md-end mt-md-0" >
+      <!-- <div><i class="fa fa-cog" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></i></div> -->
+       <div class="d-flex align-items-center gap-2">
+        <img src="resource/images/profile image.png" class="profile-img" id="userPhotoImage" alt="profile image" />
+        <div>
+          Hello, <span th:text="${loggedUser}">Username</span> 
+          <span th:text="${loggedUserRole}" style="color: blanchedalmond;">Role</span>
+        </div>
+      </div>
+     </div>
+   </nav> 
+
+
+
+
+
+</body>
+
+</html>
+
+
+   
+     

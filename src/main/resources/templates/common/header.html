@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:fragment="headerFragment">
+    <meta charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}"></title>
+    <link rel="icon" href="resource/images/company_logo.png">
+    <!-- bootstrap min css -->
+   <link rel="stylesheet" th:href="@{resource/bootstrap-5.2.3-dist/css/bootstrap.min.css}">
+
+    <script th:inline="javascript">
+      window.addEventListener("load",()=>{
+        let photo = /*[[${loggedUserPhoto}]]*/ 'loggedUserPhoto';
+         if(photo != null){
+          userPhotoImage.src = atob(photo);
+         }
+
+      })
+
+    </script>
+   
+    <!-- bootstrap main css -->
+    <link rel="stylesheet" href="resource/css/main.css">
+
+  <!-- bootstrap min js -->
+  <script src="resource/bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+
+
+  <!-- Fontawesome css -->
+  <link rel="stylesheet" href="resource/fontawesome-free-6.4.2/css/all.css">
+
+  <!--link jquery -->
+  <script src="resource/js/jquery.js"></script>
+
+   <!--link jquery -->
+   <script src="resource/js/sidebar.js"></script>
+
+     <!-- link datatable css file
+  <link rel="stylesheet" href="resource/DataTables/datatables.css"/>
+
+link datatable js file
+ <script src="resource/DataTables/datatables.js"></script> -->
+
+    <!--link datatable js file -->
+    <link href="/resource/datatables-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+
+    <script src="/resource/datatables-1.13.6/js/jquery.dataTables.min.js"></script>
+
+   <script  src ="resource/controller.js/dashboard.js"></script>
+   
+</head>
+
+<head th:fragment="moduleHeaderFragment">
+  <meta charset="UTF-8" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${title}"></title>
+  <link rel="icon" href="resource/images/company_logo.png">
+  <!-- bootstrap min css -->
+ <link rel="stylesheet" th:href="@{resource/bootstrap-5.2.3-dist/css/bootstrap.min.css}">
+
+  <!-- bootstrap min css -->
+  <link rel="stylesheet" href="resource/css/main.css">
+
+  <link rel="stylesheet" href="resource/css/button.css">
+
+  <link rel="stylesheet" href="resource/css/login.css">
+
+<!-- bootstrap min js -->
+<script src="resource/bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Fontawesome css -->
+<link rel="stylesheet" href="resource/fontawesome-free-6.4.2/css/all.css">
+
+<!--link jquery -->
+<script src="resource/js/jquery.js"></script>
+
+     <!-- link datatable css file
+     <link rel="stylesheet" href="resource/DataTables/datatables.css"/>
+
+     link datatable js file
+    <script src="resource/DataTables/datatables.js"></script> -->
+
+      <!--link datatable js file -->
+    <link href="/resource/datatables-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+    
+    <script src="/resource/datatables-1.13.6/js/jquery.dataTables.min.js"></script>
+  <!-- link table function js file -->
+  <script src ="resource/js/tablefunction.js"></script>
+
+  <!-- link common js file -->
+  <script src ="resource/js/common.js"></script>
+
+  <!-- link validation js file -->
+  <script src ="resource/js/validation.js"></script>
+
+  <!--link jquery -->
+  <script src="resource/js/sidebar.js"></script>
+
+  <script  src ="resource/controller.js/dashboard.js"></script>
+  <script th:inline="javascript">
+    window.addEventListener("load",()=>{
+      let userphoto = /*[[${loggedUserPhoto}]]*/ 'loggedUserPhoto';
+       if(userphoto != null){
+        userPhotoImage.src = atob(userphoto);
+       }
+
+    })
+
+  </script>
+
+</head>
+
+
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head th:replace =" ~{ common/header :: moduleHeaderFragment }">
+
+  </head>
+  <body>
+    <div class="container-fluid">
+        <div class="row">
+          <nav th:replace =" ~{ common/sidebar :: sidebarFragment }"></nav>
+            <div class="col-md-9 ml-sm-auto col-lg-10">
+            <div class="row">
+              <nav th:replace =" ~{ common/topnavbar :: topnavbarFragment }">
+                </div>
+                <div class="row content">
+                  <main class="col-md-12 ms-sm-auto col-lg-12 "  style="height: 100vh;">
+        
+                    <div class="d-flex justify-content-md-end flex-wrap flex-md-nowrap align-items-center mt-4 pt-3 pb-2 mb-3 border-bottom">
+                      <button type="button" class="btn btn-Add btn-sm" data-bs-toggle="modal" data-bs-target="#modalPrivilegeAddForm" >Add Privilege</button>
+                      <i class="fa-solid fa-print fa-xl ms-4" style="color: #0a1324;"></i>
+                    </div>
+                    <div class="card">
+                      <div class="card-body">
+                          <div class="table-responsive">
+                              <table class="display nowrap" style="width:100%" id="tablePrivilege">
+                                  <thead>
+                                      <tr>
+                                          <th>Id</th>
+                                          <th>Role</th>
+                                          <th>Module</th>
+                                          <th>Select</th>
+                                          <th>Insert</th>
+                                          <th>Update</th>
+                                          <th>Delete</th>
+                                          <th class="action-button">Action</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>                   
+                  </main>
+                </div>
+              </div>
+            
+              <div class="modal" id="modalPrivilegeAddForm" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header fw-bold">Privilege Details
+                           <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button> 
+                        </div>
+                        <div class="modal-body">
+                          <form onsubmit ="return false" id="formPrivilege">
+                         
+                              <div class="row mt-1 ">
+                                <div class="col-12 text-end">
+                                 <span class="fw-bold"><span class ="text-danger">*</span>Required</span>
+                                </div>
+                             </div>
+                           
+                              <div class="row mb-3">
+
+                                <label for="selectRole" class="form-label fw-bold">Select Role: <span class="text-danger">  *</span></label>
+                                
+                                <select class="form-control" id="selectRole" onchange="selectDFeildValidator(this,'','privilege','role_id'); generateModuleList()" style="width:100%;" required >
+                                </select>       
+                                   
+                            </div>
+                            <div class="row mb-3">
+                          
+                                <label for="selectModule" class="form-label fw-bold">Select Module: <span class="text-danger">  *</span></label>
+                           
+                              <select  class="form-control" id="selectModule" onchange="selectDFeildValidator(this,'','privilege','module_id')" required ></select>
+                            
+                            </div>
+                         
+                            <div class="flex-row d-flex justify-content-start">
+                              <label class="form-label mb-3">Select privileges : <span class="text-danger">  *</span></label>
+                             </div>
+                            <div class="flex-row mb-4 d-flex">
+                            <div class="col-10">
+                            
+                                <div class="form-check form-check-inline">
+                                  <label class="form-check-label" for="checkBoxSelect">Select :</label>
+                                  <input type ="checkbox" class="form-check-input" id="checkBoxSelect"  onchange="checkBoxValidator(checkBoxSelect,'','privilege','sel',true,false,labelCBSelect, 'Granted', 'Not-Granted')">
+                                    <label for="checkBoxSelect" id="labelCBSelect" class="form-check-label" >Not-Granted</label>
+                                </div>
+                               
+                                <div class="form-check form-check-inline">
+                                  <label class="form-check-label" for="checkBoxInsert">Insert :</label>
+                                  <input type ="checkbox" class="form-check-input" id="checkBoxInsert" onchange="checkBoxValidator(checkBoxInsert,'','privilege','inst',true,false,labelCBInsert, 'Granted', 'Not-Granted')">
+                                    <label for="checkBoxInsert" id="labelCBInsert" class="form-check-label" >Not-Granted</label>
+                                </div>
+                               
+                                <div class="form-check form-check-inline">
+                                  <label class="form-check-label"for="checkBoxUpdate">Update :</label>
+                                  <input type ="checkbox" class="form-check-input" id="checkBoxUpdate"
+                                  onchange="checkBoxValidator(checkBoxUpdate,'','privilege','upd',true,false,labelCBUpdate, 'Granted', 'Not-Granted')">
+                                    <label for="checkBoxUpdate" id="labelCBUpdate" class="form-check-label" >Not-Granted</label>
+                                </div>
+                                
+                                <div class="form-check form-check-inline">
+                                  <label class="form-check-label"for="checkBoxDelete">Delete :</label>
+                                  <input type ="checkbox" class="form-check-input" id="checkBoxDelete"
+                                  onchange="checkBoxValidator(checkBoxDelete,'','privilege','del',true,false,labelCBDelete, 'Granted', 'Not-Granted')">
+                                    <label for="checkBoxDelete" id="labelCBDelete" class="form-check-label" >Not-Granted</label>
+                                </div>
+                                
+                              </div>
+                            </div>
+        
+                            <div class="d-grid gap-2 d-md-block justify-content-md-end">
+                              <button class="btn btn-md btn-addTable" type="submit" id="btnAddPrivilege" onclick="buttonPrivilegeAdd()">Add</button>
+                              <button class="btn btn-md btn-updTable" type="submit" id="btnUpdatePrivilege" onclick="buttonPrivilegeUpdate()" >Update</button>
+                              <button class="btn btn-md btn-delTable" type="reset">Clear</button>
+                            </div>
+                            
+                          </form>
+                        </div>
+                    </div>
+                </div>
+        
+            </div>
+    <script src="resource/js/sidebar.js"></script>
+          
+    <script  src ="resource/controller.js/privilege.js" type="text/javascript"></script>
+
+</body>
+</html>
+
+
+

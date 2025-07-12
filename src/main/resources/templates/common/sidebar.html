@@ -1,0 +1,83 @@
+
+<html lang="en">
+<body>
+  <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar collapse" th:fragment="sidebarFragment">
+    <div class="dummy-content text-center">
+      <img src="resource/images/company_logo.png" alt="Logo" class="logo-img">
+    </div>
+    <div class="position-sticky">
+      <a class="nav-link" href="/index"><i class="fa fa-home me-2"></i>HOME</a>
+      <hr>
+      <a class="nav-link" href="/dashboard"><i class="fa fa-tachometer-alt me-2"></i>DASHBOARD</a>
+      <hr>
+      <a class="nav-link" href="/employee"><i class="fa fa-users me-2"></i>MANAGE EMPLOYEE</a>
+      <hr>
+      <a class="nav-link" href="/user"><i class="fa fa-user me-2"></i>MANAGE USER</a>
+      <hr>
+      <a class="nav-link" href="/privilege"><i class="fa fa-key me-2"></i>MANAGE PRIVILEGE</a>
+      <hr>
+
+      <!-- Purchase Order Dropdown -->
+      <button class="dropdown-btn"><i class="fa fa-shopping-cart me-2"></i>MANAGE PURCHASE ORDER <i class="fa fa-caret-down"></i></button>
+      <div class="dropdown-container">
+        <a href="/material" class="dropdown-item">MANAGE MATERIAL</a>
+        <a href="/supplier" class="dropdown-item">MANAGE SUPPLIER</a>
+        <a href="/purchaseorder" class="dropdown-item">MANAGE PURCHASE ORDER</a>
+        <a href="/grn" class="dropdown-item">MANAGE GRN</a>
+        <a href="/supplierpayment" class="dropdown-item">MANAGE SUPPLIER PAYMENT</a>
+      </div>
+      <hr>
+
+      <!-- Production Dropdown -->
+      <button class="dropdown-btn"><i class="fa fa-industry me-2"></i>MANAGE PRODUCTION <i class="fa fa-caret-down"></i></button>
+      <div class="dropdown-container">
+        <a href="/product" class="dropdown-item">PRODUCT</a>
+        <a href="/production-order" class="dropdown-item">PRODUCTION ORDER</a>
+        <a href="/productionorderconfirm" class="dropdown-item">PRODUCTION ORDER CONFIRMATION</a>
+        <a href="/dailyproduction" class="dropdown-item">DAILY PRODUCTION</a>
+      </div>
+      <hr>
+
+      <!-- Sales Dropdown -->
+      <button class="dropdown-btn"><i class="fa fa-chart-line me-2"></i>MANAGE SALES <i class="fa fa-caret-down"></i></button>
+      <div class="dropdown-container">
+        <a href="/sales" class="dropdown-item">MANAGE SALES</a>
+        <a href="/customer" class="dropdown-item">MANAGE CUSTOMER</a>
+      </div>
+      <hr>
+
+      <!-- Reports Dropdown -->
+      <button class="dropdown-btn"><i class="fa fa-file-alt me-2"></i>REPORTS <i class="fa fa-caret-down"></i></button>
+      <div class="dropdown-container">
+        <a href="/report" class="dropdown-item">PRODUCT SALES REPORT</a>
+        <a href="/reportpro" class="dropdown-item">PRODUCTION REPORT</a>
+        <a href="#" class="dropdown-item">MATERIAL CONSUMPTION REPORT</a>
+      </div>
+      <hr>
+
+      <a class="nav-link" href="/login"><i class="fa fa-sign-out-alt me-2"></i>SIGN OUT</a>
+    </div>
+  </nav>
+
+    <script>
+        /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content -
+   This allows the user to have multiple dropdowns without any conflict */
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+            dropdown[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+
+
