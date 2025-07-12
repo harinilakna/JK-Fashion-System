@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <nav class="navbar" th:fragment="topnavbarFragment" >
+    <div class="d-flex col-12 col-md-3 col-lg-2 mb-2 mb-lg-0 flex-wrap flex-md-nowrap justify-content-between">
+       <button class="navbar-toggler collapsed mt-4 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+       </button>
+     </div> 
+     <div class="col-12 col-md-5 col-lg-8 d-flex align-items-center justify-content-md-end mt-md-0" >
+      <div><i class="fa fa-cog" aria-hidden="true" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></i></div>
+       <div class="mr-3 dropdown">
+         <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+             <img src="resource/images/profile image.png" class="profile-img" id="userPhotoImage" alt="profile image" style="width: 50px; height: 50px; border-radius: 50%;">
+         </button>
+         <i class="fa fa-sign-out" aria-hidden="true" onclick="btnSignOut()"  style="background-color: red;"></i>
+         Hello,<span th:text="${loggedUser}"></span> <span th:text="${loggedUserRole}" style="color: blanchedalmond;"></span>      
+     </div>
+     </div>
+   </nav> 
+  
+   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Understood</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</body>
+</html>
+
+
+    

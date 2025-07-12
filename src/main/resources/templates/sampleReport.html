@@ -1,0 +1,148 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head th:replace =" ~{ common/header :: headerFragment }"></head>
+  <head>    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script></head>
+  <body> 
+    <nav th:replace =" ~{ common/topnavbar :: topnavbarFragment }"></nav>
+    <div class="container-fluid" style=" background-color: #EAF3F3;">
+      <div class="row">
+        <nav th:replace =" ~{ common/sidebar :: sidebarFragment }"></nav>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main">
+
+         
+                      <div class="col-12">
+                          <div class="card">
+                              <h5 class="card-header">Product Sales Report</h5>
+                              <div class="card-body">
+                                <canvas id="myChart"></canvas>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+        </main>
+      </div>
+      <footer th:replace =" ~{ common/footer :: footerFragment }"></footer>
+    </div>
+    <script src="resource/js/sidebar.js"></script>
+    <script>
+        const ctx = document.getElementById('myChart');
+      
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+              label: '# of Votes',
+              data: [12, 19, 3, 5, 2, 3],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      </script>
+    
+  </body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+  <head th:replace =" ~{ common/header :: moduleHeaderFragment }">
+  </head>
+  <head>    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script></head>
+<body>
+     <!-- topNav bar start-->
+
+<nav th:replace =" ~{ common/topnavbar :: topnavbarFragment }"></nav>
+
+<!-- topNav bar end-->
+    <div class="container-fluid">
+      <div class="row">
+    <!-- side bar start-->
+    <nav th:replace =" ~{ common/sidebar :: sidebarFragment }"></nav>
+    <!-- side bar end-->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"  style="height: 100vh;">
+
+          <div class="d-flex justify-content-md-end flex-wrap flex-md-nowrap align-items-center mt-4 pt-3 pb-2 mb-3 border-bottom"> 
+            <select id="selectGender" class="form-control form-control-sm me-3" style="width: 200px;" required>
+              <option value="" selected disabled>Select Product</option>
+              <option value="Male" >JK000001</option>
+              <option value="Female" >JK000002</option>
+              <option value="Other" >JK000010</option>
+            </select>
+              <lable class="me-1" >Start Date :</lable> 
+              <input type="date" class="form-control form-control-sm me-3" style="width: 150px;">  
+              <lable class="me-1">End Date :</lable> 
+              <input type="date" class="form-control form-control-sm me-3"  style="width: 150px;" required>       
+            <button button type="button" class="btn btn-Add btn-sm me-3" >Search</button>
+            <button button type="button" class="btn btn-Add btn-sm" >Clear Search</button>      
+          </div>
+          <!-- Privilege Table start-->
+          <div class="card">
+            <h5 class="card-header me-5">Product Sales Report<i class="fa-solid fa-print fa-xl ms-4" style="color: #0a1324;"></i></h5>
+           
+            <div class="card-body">
+                <div class="col-12">
+                    
+                    <canvas id="myChart"  width="300" height="400" ></canvas>        
+                    
+                </div>
+            </div>
+            </div>
+          
+        </main>
+      </div>
+    </div>
+    <!-- link privilege js file -->
+    <script  src ="resource/controller.js/privilege.js" type="text/javascript"></script>
+    <script>
+         const ctx = document.getElementById('myChart').getContext('2d');
+
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['Small', 'Medium', 'Large', 'Extra-Large'],
+    datasets: [{
+      label: 'T-Shirt Size',
+      data: [100, 250, 80, 20],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        
+      ],
+      borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        
+      ],
+      borderWidth: 1,
+      barThickness: 60 // Adjust this value to reduce column size further if necessary
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+
+        $(function(){
+  $('#datepicker').datepicker();
+});
+      </script>
+        <script src="resource/js/sidebar.js"></script>
+  </body>
+</html>

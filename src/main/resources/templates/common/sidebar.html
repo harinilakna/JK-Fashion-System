@@ -1,0 +1,56 @@
+<nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar collapse" th:fragment="sidebarFragment">
+  <div class="dummy-content">
+    <img src="resource/images/company_logo.png" alt="Logo" class="logo-img">
+</div>
+        <div class="position-sticky">      
+          <a class="nav-link " aria-current="page" href="/index">HOME</a>
+        <hr> 
+        <a class="nav-link" aria-current="page" href="/dashboard">DASHBOARD</a>
+        <hr>
+        <a class="nav-link" href="/employee"> MANAGE EMPLOYEE </a>
+        <hr> 
+        <a class="nav-link" href="/user">MANAGE USER</a>
+        <hr>
+        <a class="nav-link" href="/privilege">MANAGE PRIVILEGE</a>
+        <hr> 
+        <button class="dropdown-btn"> MANAGE PURCHASE ORDER
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a class="dropdown-item" href="/material">MANAGE MATERIAL</a>
+          <a class="dropdown-item" href="/supplier">MANAGE SUPPLIER</a>
+          <a class="dropdown-item" href="/purchaseorder"> MANAGE PURCHASE ORDER</a>
+          <a class="dropdown-item" href="/grn"> MANAGE GRN</a>
+          <a class="dropdown-item" href="/supplierpayment"> MANAGE  SUPPLIER PAYMENT</a>
+        </div>
+        <hr>
+        <button class="dropdown-btn">MANAGE PRODUCTION
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a class="dropdown-item" href="/product">PRODUCT</a>
+          <a class="dropdown-item" href="/production-order">PRODUCTION ORDER</a>
+           <a class="dropdown-item" href="/productionorderconfirm">PRODUCTION ORDER CONFIRMATION</a>
+           <a class="dropdown-item" href="/dailyproduction">DAILY PRODUCTION</a>
+        </div>
+        <hr> 
+        <button class="dropdown-btn">MANAGE SALES
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a class="dropdown-item" href="/sales">MANAGE SALES</a>
+          <a class="dropdown-item" href="/customer">MANAGE CUSTOMER</a>
+        </div>
+        <hr> 
+        <button class="dropdown-btn"> REPORTS
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+          <a class="dropdown-item" href="/report">PRODUCT SALES REPORT</a>
+          <a class="dropdown-item" href="/reportpro">PRODUCTION REPORT</a>
+          <a class="dropdown-item" href="#">MATERIAL CONSUMPTION REPORT</a>
+        </div>
+        <hr> 
+        <a class="nav-link" href="/login">SIGN OUT</a>
+        </div>
+      </nav> 
