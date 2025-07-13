@@ -327,5 +327,46 @@ const fillDataIntoDailyProduction = (tableId, dataList, propertyList, printButto
 
 }
 
+/*
+fill data in to Payment table -> parameter set
+1 -> tableId
+2 -> object list
+3 -> property list for table data
+*/
+const fillDataIntoPaymentTable= (tableId, dataList, propertyList)=>{
+    //create variable for store table body
+    const tableBody = tableId.children[1];
+    tableBody.innerHTML = '';
+
+    dataList.forEach((item,ind) =>{
+        const tr = document.createElement('tr');
+
+        const tdIndex = document.createElement('td');
+        tdIndex.innerText = parseInt(ind) + 1;
+        tr.appendChild(tdIndex);
+
+        for (const itemob of propertyList) {
+            const td = document.createElement('td');
+            // td.innerText =item.number;
+            if (itemob.datatype == 'string') {
+                td.innerText =  dataList[ind][itemob.property];
+            }
+
+            if (itemob.datatype == 'function') {
+                td.innerHTML = itemob.property(dataList[ind]);
+            }
+
+            if (itemob.datatype == 'number'){
+                td.innerText = dataList[ind][itemob.property];
+            }
+            tr.appendChild(td);
+
+        }
+        tableBody.appendChild(tr);
+
+    });
+
+}
+
 
 

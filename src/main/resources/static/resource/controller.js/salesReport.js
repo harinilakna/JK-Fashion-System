@@ -1,7 +1,7 @@
 // browser onload event
 window.addEventListener('load', () => {
 
-    userPrivilege = ajaxGetRequest("/privilege/by-logged-user-module/employee");
+    userPrivilege = ajaxGetRequest("/privilege/bylogedusermodule/employee");
     console.log(userPrivilege);
 
 });
@@ -9,8 +9,10 @@ window.addEventListener('load', () => {
 //******** INCOME REPORT **********
 
 const generateIncomeReport = () => {
+    console.log("Generating Income Report...");
+
     //start date and ned date thamai parameters
-    incomereport = ajaxGetRequest("/report/data/reportdailyincome?startdate="+dateStartDate.value+"&enddate="+dateEndDate.value + "&type="+selectType.value);
+    incomereport = ajaxGetRequest("/report/data/income?startdate="+dateStartDate.value+"&enddate="+dateEndDate.value + "&type="+selectType.value);
     // porderMaterials = ajaxGetRequestMapping("/reportdatapordermaterial");
     
     const displayPropertyList = [
