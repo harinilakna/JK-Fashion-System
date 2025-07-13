@@ -17,7 +17,7 @@
         <hr>
 
               <div class="row mt-4 mb-4 align-items-center">
-    <div class="col-3">
+    <div class="col-4">
         <div class="input-group">
             <span class="input-group-text bg-dark bg-gradient bg-opacity-75 text-white fw-bold">
                 Type <span class="text-white">*</span> :
@@ -31,15 +31,29 @@
         </div>
     </div>
     <div class="col-3">
+        <span class="input-group-text bg-dark bg-gradient bg-opacity-75 text-white fw-bold">
+                Start Date <span class="text-white">*</span> :
+            </span>
+     <input type="date" id="dateStartDate" class="form-select" required>
+     </div>
+   <div class="col-3">
+     <span class="input-group-text bg-dark bg-gradient bg-opacity-75 text-white fw-bold">
+                End Date <span class="text-white">*</span> :
+            </span>
+    <input type="date" id="dateEndDate" class="form-select" required>
+      </div>  
+  </div>
+   <div class="row mt-4 mb-4 align-items-center">
+<div class="col-4">
         <button type="button" class="btn btn-Add w-100" onclick="generateIncomeReport()">Generate</button>
     </div>
-    <div class="col-3">
+    <div class="col-4">
         <button type="button" class="btn btn-Add w-100" onclick="clearChart()">Clear</button>
     </div>
-    <div class="col-3">
+    <div class="col-4">
         <button type="button" class="btn btn-Add w-100" onclick="printChart()">Print</button>
     </div>
-  </div>
+   </div>
               <div class="card">
                 <div class="card-body">
                   <div class="row mb-4">
