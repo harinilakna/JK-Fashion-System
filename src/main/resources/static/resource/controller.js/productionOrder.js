@@ -21,23 +21,52 @@ const refreshProductionOrderTable = () =>{
 
     fillDataIntoTable(tableProduction, productionOrderList ,displayProperty ,refillProductionForm, deleteProductionOrder, printProduction, true, userPrivilege);
 
-    // $("#ProductionOrderTable").dataTable({
-    //     destroy:true,
-    //     responsive: true,
-    //     // scrollX: true,// Enable horizontal scrollbar
-    //     scrollY: 300 // Enable vertical scrollbar with a height of 200 pixels
-    // });
 
-    $("#tableProduction").dataTable();
+        $("#tableProduction").dataTable({
+        retrieve: true,
+        responsive: true,
+        scrollX: true,
+        scrollY: '300px'
+        });
 
-    //disable delete button
-    productionOrderList.forEach((element, index) => {
-        if(element.production_order_status_id.name === "Deleted"){
-            if (userPrivilege.delete) {
-                grnTable.children[1].children[index].children[5].children[1].disabled = true; //you can also use disabled
-            }
-        }
-    });
+    // //disable delete button
+//     productionOrderList.forEach((element, index) => {
+    
+//     if (element.production_order_status_id.name != 'Submitted') {
+//         // Disable Edit button
+//         tableProduction.children[1].children[index].children[6].children[0].disabled = true;
+//     }
+
+//     if (element.production_order_status_id.name == 'Deleted') {
+//         // Disable Delete button
+//         tableProduction.children[1].children[index].children[6].children[1].disabled = true;
+//     }
+
+// }
+// );
+const tbody = tableProduction.querySelector('tbody');
+
+productionOrderList.forEach((element, index) => {
+    const row = tbody?.children[index];
+    if (!row) return; // Skip if row doesn't exist
+
+    const actionCell = row.children[6]; // Assuming 7th <td> has buttons
+    if (!actionCell) return;
+
+    const editBtn = actionCell.children[0];
+    const deleteBtn = actionCell.children[1];
+
+    if (editBtn && element.production_order_status_id.name !== 'Submitted') {
+        editBtn.disabled = true;
+    }
+
+    if (deleteBtn && element.production_order_status_id.name === 'Deleted') {
+        deleteBtn.disabled = true;
+    }
+});
+
+
+
 
 }
 
@@ -321,7 +350,7 @@ const buttonProUpdate = () =>{
 }
 
 const deleteProductionOrder =(rowOb, rowInd) =>{
-    const userConfirm = confirm('Do you want to delete this GRN Order \n' + rowOb.code);
+    const userConfirm = confirm('Do you want to delete this production Order \n' + rowOb.code);
 
     if (userConfirm) {
         let serverResponse = ajaxRequestBody("/production-order", "DELETE", rowOb);

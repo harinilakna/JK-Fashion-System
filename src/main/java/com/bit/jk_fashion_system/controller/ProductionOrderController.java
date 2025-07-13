@@ -199,7 +199,7 @@ public class ProductionOrderController {
             return "Delete not Completed";
         }
   
-        extQR.setProduction_order_status_id(prostatusDao.getReferenceById(3));
+        extQR.setProduction_order_status_id(prostatusDao.getReferenceById(7));
         prductionOrder.setDeleted_user(userDao.getUserByUserName(auth.getName()).getId());
         extQR.setDeleted_at(LocalDateTime.now());
         proDao.save(extQR);
