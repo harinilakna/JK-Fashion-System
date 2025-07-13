@@ -31,8 +31,8 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
 
 
     
-    // @Query(value = "SELECT p FROM Product p where p.id =:id ")
-    // Product getByProduct(@Param("id") Integer id);
+    @Query(value = "SELECT p FROM Product p where p.id =:id ")
+    Product getByProduct(@Param("id") Integer id);
 
     
 }

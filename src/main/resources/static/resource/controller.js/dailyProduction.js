@@ -139,7 +139,7 @@ const dailyProductionAdd = () =>{
         let userConfirm = window.confirm('Are you sure to add this Production?\n'
             + '\n Production Order is : ' + dailyProduct.production_order_id.code
             + '\n Product  is : ' + dailyProduct.product_id.name
-            + '\n Production Order is : ' + dailyProduct.quantity
+            + '\n Production Quantity is : ' + dailyProduct.quantity
             );
 
         if(userConfirm){

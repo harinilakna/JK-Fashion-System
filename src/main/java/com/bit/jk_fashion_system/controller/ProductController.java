@@ -91,6 +91,8 @@ public class ProductController {
         }
        
           product.setCreated_at(LocalDateTime.now());//set current date and time
+
+          product.setAvailable_quantity(0);
           //set log user value with er connection
         //   User logedUser = userDao.getUserByUserName(auth.getName());
         //   material.setAdduser_id(logedUser);

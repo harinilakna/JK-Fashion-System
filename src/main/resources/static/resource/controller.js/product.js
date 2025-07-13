@@ -206,7 +206,7 @@ const refillProductForm =(rowOb,rowInd)=>{
 
     // productImage.value = product.image;
     textTotalCost.value = product.material_total_cost;
-    productName.value = product.name;
+    textProductName.value = product.name;
     productPrice.value = product.unit_price;
     textRop.value = product.reorder_point;
 
@@ -223,7 +223,7 @@ const refillProductForm =(rowOb,rowInd)=>{
     fillDataIntoSelect(selectGender, 'Select Gender*', genderList, 'name',product.gender_id.name );
 
      // GET Size
-     fillDataIntoSelect(selectize, 'Select Size*', sizeList, 'name',product.size_id.name );
+     fillDataIntoSelect(selectSize, 'Select Size*', sizeList,'name',product.size_id.name );
 
     //set valid color for element
     console.log(userPrivilege);
@@ -260,9 +260,9 @@ const checkError = () => {
         errors = errors + 'please add product size...! \n';
     }
 
-    // if (product.productImage == null) {
-    //     errors = errors + 'please ADd Product Image...! \n';
-    // }
+     if (product.gender_id == null) {
+        errors = errors + 'please add grnder..! \n';
+    }
 
     if (product.name == null) {
         errors = errors + 'please Enter Product Name...! \n';
@@ -333,9 +333,9 @@ const checkUpdate = ()=>{
         updates = updates + "Product Status is change " + oldProduct.product_status_id.name + " into " + product.product_status_id.name + "\n";
     }
 
-    // if(product.image != oldProduct.image){
-    //     updates = updates + "Product Name is change " + oldProduct.image + " into " + product.image + "\n";
-    // }
+    if(product.image != oldProduct.image){
+        updates = updates + "Product Image is change " + oldProduct.image + " into " + product.image + "\n";
+    }
 
     if(product.note != oldProduct.note){
         updates = updates + " Note is change \n";
@@ -364,7 +364,7 @@ const checkUpdate = ()=>{
         let extMCount = 0;
         for (const newOrderMaterial of product.productMaterialList) {
             for (const oldOrderMaterial of oldProduct.productMaterialList) {
-                if (newOrderMaterial.material.id == oldOrderMaterial.material.id) {
+                if (newOrderMaterial.material_id.id == oldOrderMaterial.material_id.id) {
                     extMCount = extMCount + 1;
                 }
             }

@@ -20,12 +20,15 @@ const refreshProductionOrderConfirmTable = () =>{
 
     fillDataIntoOrderConfirmation(tableProductionConfirm, productionOrderList ,displayProperty ,refillConfirmForm, true, userPrivilege);
 
+  
+    
     $("#tableProductionConfirm").dataTable({
-        destroy:true,
-        responsive: true,
-        // scrollX: true,// Enable horizontal scrollbar
-        scrollY: 300 // Enable vertical scrollbar with a height of 200 pixels
+        retrieve: true,
+    responsive: true,
+    scrollX: true,
+    scrollY: '300px'
     });
+
 
   
 

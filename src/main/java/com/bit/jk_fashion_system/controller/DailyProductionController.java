@@ -1,6 +1,7 @@
 package com.bit.jk_fashion_system.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.bit.jk_fashion_system.dao.*;
 import com.bit.jk_fashion_system.entity.*;
@@ -128,15 +129,21 @@ public class DailyProductionController {
 
           productionOrderDao.save(productionOrder);
 
+      
+
           //*Means it's an internal order */
           // item stock eka up wena eka
-          Product extitemStock = productDao.getReferenceById(itemDetails.getId());
-
-          if (extitemStock != null ) { // if a stock is already there
+         Product extitemStock = productDao.getByProduct(itemDetails.getId());
+       
+          if (extitemStock != null ) {
+                 // if a stock is already there // if need to check empty is empty
+                //  Product product = extitemStock.get();
               Integer availableQty = extitemStock.getAvailable_quantity();
               if (availableQty != null) {
                   extitemStock.setAvailable_quantity(extitemStock.getAvailable_quantity() + (production.getQuantity()));
-                //   extitemStock.setProduct_status_id(productstatusDao.getReferenceById(1));
+                  extitemStock.setProduct_status_id(productstatusDao.getReferenceById(1));
+
+              
               }
 
               // save material stock dao
