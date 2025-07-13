@@ -290,7 +290,7 @@ const buttonProductAdd = () =>{
         //2.need to get user confirmation
         let userConfirm = window.confirm('Are you sure to add this Product?\n'
             + '\n Product name is : ' + product.name  + '\n Category is : ' + product.product_category_id.name
-        + '\n Product Price is: ' + product.unit_price  + '\n Product Price is: ' + product.size_id.name);
+        + '\n Product Price is: ' + product.unit_price  + '\n Product size: ' + product.size_id.name);
 
         if(userConfirm){
             //3.pass data into backend
@@ -326,11 +326,11 @@ const checkUpdate = ()=>{
     let updates = "";
 
     if (product.product_category_id != oldProduct.product_category_id){
-        updates = updates + "Product Category is change " + oldProduct.product_category_id.name + " into " + product.product_category_id.name + "\n";
+        updates = updates + "Product Category is changed";
     }
 
     if(product.product_status_id != oldProduct.product_status_id){
-        updates = updates + "Product Status is change " + oldProduct.product_status_id.name + " into " + product.product_status_id.name + "\n";
+        updates = updates + "Product Status is change ";
     }
 
     if(product.image != oldProduct.image){
