@@ -10,16 +10,29 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class ReportUIController {
 
-    //create mapping ui service[/employee -- return employee ui]
-     @GetMapping(value = "/report")
-    public ModelAndView indexUI(){
+
+    @GetMapping(value = "/sales")
+    public ModelAndView salesReportUI(){
         //get logged user authontication object
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         ModelAndView indexView = new ModelAndView();
         indexView.addObject("loggedUser", auth.getName());
         indexView.addObject("title", "Report : BIT Project 2024");
-        indexView.setViewName("incomeReport.html");
+        indexView.setViewName("salesReport.html");
+
+        return indexView;
+    }
+
+    @GetMapping(value = "/expenses")
+    public ModelAndView expensesReportUI(){
+        //get logged user authontication object
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        ModelAndView indexView = new ModelAndView();
+        indexView.addObject("loggedUser", auth.getName());
+        indexView.addObject("title", "Report : BIT Project 2024");
+        indexView.setViewName("expensesReport.html");
 
         return indexView;
     }

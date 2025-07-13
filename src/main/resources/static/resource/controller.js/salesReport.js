@@ -1,7 +1,7 @@
 // browser onload event
 window.addEventListener('load', () => {
 
-    userPrivilege = ajaxGetRequest("/privilege/by-logged-user-module/employee");
+    userPrivilege = ajaxGetRequest("/privilege/bylogedusermodule/employee");
     console.log(userPrivilege);
 
 });
