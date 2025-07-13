@@ -142,11 +142,18 @@ public class ProductController {
    
            product.setUpdated_at(LocalDateTime.now());//set updated date and time
            product.setUpdateduser(userDao.getUserByUserName(auth.getName()).getId());
-           productDao.save(product);
+          
              //check shop status
            if(product.getProduct_status_id().getName().equals("Deleted")){
             return "Material is Deleted";
            }
+
+            for(ProductHasMaterial PO : product.getProductMaterialList()){
+            PO.setProduct_id(product);
+        }
+
+            productDao.save(product);
+            
           return "OK";
 
        }catch(Exception e){
