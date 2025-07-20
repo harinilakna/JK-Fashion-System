@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace = "~{common/header :: headerFragment}">
+
+</head>
+<head>
+    <!-- <link href='resource/fonts/Cormorant SC/CormorantSC-Regular.ttf' rel='stylesheet'> -->
+  <style> 
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.background-image {
+    background-image: url('resource/images/home.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Ensure this element is positioned relatively */
+    color: white;
+    text-align: center;
+}
+
+.background-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(250, 248, 248, 0.4); /* Adjust the opacity here */
+    z-index: 1; /* Ensure the overlay is above the background image */
+}
+
+.background-image > .content {
+  padding: 15px;
+  font-family: 'Cormorant SC';
+    position: relative;
+    z-index: 2; /* Ensure the content is above the overlay */
+}
+
+.background-image h1 {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    color: #6D5018;
+}
+
+.background-image p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    color: black;
+}
+
+.background-image .btn {
+    font-size: 1.25rem;
+    background-color: #FFC656;
+    color: white;
+}
+
+    </style> </head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="left col-2">
+            <!--Side Bar-->
+            <div th:replace =" ~{ common/sidebar :: sidebarfragment }"></div>
+        </div>
+
+        <div class="right col-10">
+
+            <!-- Top Nav Bar-->
+            <nav class="navbar p-3" th:replace =" ~{ common/navbar :: navbarfragment }">
+            </nav>
+
+            <main class="col-md-9 ml-sm-auto col-lg-12 px-md-4 py-4 dashboard-main">
+
+                <div class="container mb-5">
+                    <h1 class="h2">Dashboard</h1>
+                </div>
+
+                <div class="container mb-5">
+                   
+                    <div class="row content">
+                        <div class="background-image">
+                            <div class="content">
+                                <h1>Welcome <br>to<br> JK Fashion</h1>
+                                <p>JK Fashion is a dynamic and innovative company specializing
+                                   <br> in the design, production, and sale of high-quality T-shirts.
+                                    <br>The company combines creativity with craftsmanship to deliver
+                                    <br>unique and stylish apparel that caters to a diverse audience.</p>
+                                <a href="#details" class="btn btn-light">See More Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="pt-5 d-flex justify-content-between">
+                    <span>Copyright © 2019-2020 <a href="https://themesberg.com">Themesberg</a></span>
+                    <ul class="nav m-0">
+                        <li class="nav-item">
+                            <a class="nav-link text-secondary" aria-current="page" href="#">Privacy Policy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-secondary" href="#">Terms and conditions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-secondary" href="#">Contact</a>
+                        </li>
+                    </ul>
+                </footer>
+            </main>
+        </div>
+    </div>
+</div>
+<script>
+    /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content -
+     This allows the user to have multiple dropdowns without any conflict */
+    var dropdown = document.getElementsByClassName("dropdown-btn");
+    var i;
+
+    for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        });
+    }
+</script>
+</body>
+</html>
