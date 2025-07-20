@@ -281,6 +281,10 @@ const getPurchaseNo = (rowOb) =>{
             errors = errors + 'please select gran total..! \n';     
         }
 
+          if (grn.net_amount == null) {
+            errors = errors + 'please select Net Amount..! \n';     
+        }
+
 
           if (grn.purchase_order_id == null) {
             errors = errors + 'please select purchase order...! \n';     
@@ -396,6 +400,12 @@ const refillGrn =(rowOb,rowInd) =>{
         if(grn.recieved_date != oldgrn.recieved_date){
             updates = updates + "Required date is change \n";
         }
+
+
+        
+        if(grn.discount_rate != oldgrn.discount_rate){
+            updates = updates + "Discount rate is change \n";
+        }
     
     
         if(grn.description != oldgrn.description){
@@ -461,6 +471,7 @@ const refillGrn =(rowOb,rowInd) =>{
                         formGrn.reset();
                             //need to hide modal
                             $('#modalGrnForm').modal('hide');
+                            calculateNetAmount();
     
                         } else {
                             alert(' Not Updates....! Have Some Errors \n' + updateServicesResponses);
@@ -552,13 +563,28 @@ const refillGrn =(rowOb,rowInd) =>{
         grn.grandtotal = totalAmount; 
         textGrandtotal.value = totalAmount.toFixed(2);
 
-        // Ensure discount and totalAmount are numbers
-        let discount = parseFloat(textDiscount.value) || 0;
+        // // Ensure discount and totalAmount are numbers
+        // let discount = parseFloat(textDiscount.value) || 0;
+        // let discountedPrice = totalAmount * discount / 100;
+
+        // // Set net amount
+        // let netAmount = totalAmount - discountedPrice;
+        // textNetAmount.value = netAmount.toFixed(2);
+        //   textNetAmount.value = grn.net_amount;
+
+                let discountRate = parseFloat(textDiscount.value);
+        let discount = isNaN(discountRate) ? 0 : discountRate;
         let discountedPrice = totalAmount * discount / 100;
 
-        // Set net amount
+        // Calculate net amount
         let netAmount = totalAmount - discountedPrice;
+
+        // Update the UI field
         textNetAmount.value = netAmount.toFixed(2);
+
+
+        grn.discount = discount.toFixed(2);         // Save 0.00 if no discount entered
+        grn.net_amount = netAmount.toFixed(2);      // Save net amount (equal to total if no discount)
      } 
      
 
@@ -655,16 +681,31 @@ const refillInnerMaterialForm =(rowob , rowid) =>{
     }
 
     const calculateNetAmount = () => {
-        totalAmount = grn.grandtotal;
-        // Ensure discount and totalAmount are numbers
-        let discount = parseFloat(textDiscount.value) || 0;
-        let discountedPrice = totalAmount * discount / 100;
-        console.log("discout price " + discountedPrice)
-        // Set net amount
-        let netAmount = totalAmount - discountedPrice;
-        textNetAmount.value = netAmount.toFixed(2);
-        console.log("net amount price " + netAmount )
-        grn.net_amount = textNetAmount.value;
+
+        // totalAmount = grn.grandtotal;
+        // // Ensure discount and totalAmount are numbers
+        // let discount = parseFloat(textDiscount.value) || 0;
+        // let discountedPrice = totalAmount * discount / 100;
+        // console.log("discout price " + discountedPrice)
+        // // Set net amount
+        // let netAmount = totalAmount - discountedPrice;
+        // textNetAmount.value = netAmount.toFixed(2);
+        // console.log("net amount price " + netAmount )
+        // grn.net_amount = textNetAmount.value;
+
+        let discountRate = parseFloat(textDiscount.value);
+let discount = isNaN(discountRate) ? 0 : discountRate;
+let discountedPrice = totalAmount * discount / 100;
+
+// Calculate net amount
+let netAmount = totalAmount - discountedPrice;
+
+// Update the UI field
+textNetAmount.value = netAmount.toFixed(2);
+
+
+grn.discount = discount.toFixed(2);         // Save 0.00 if no discount entered
+grn.net_amount = netAmount.toFixed(2);      // Save net amount (equal to total if no discount)
 
     }
 

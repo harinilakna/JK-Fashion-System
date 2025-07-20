@@ -85,7 +85,7 @@ public class GrnController {
     
   //create post mapping for save employee record
   @PostMapping
-  public String save(@RequestBody Grn grn){
+  public String save(@RequestBody Grn grn){ 
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     HashMap <String,Boolean> logUserPrivi = privilegeController.getPrivilegeByUserModule(auth.getName() ,"purchase_order");
     if(!logUserPrivi.get("insert")){
@@ -93,6 +93,10 @@ public class GrnController {
     }  
      try{
 
+           if(grn.getDiscount_rate()== null){
+            grn.setDiscount_rate(BigDecimal.valueOf(0.00));
+
+           }
             grn.setBalance_amount(grn.getNet_amount());
             grn.setPaid_amount(BigDecimal.valueOf(0.00));
             
@@ -173,7 +177,7 @@ public class GrnController {
             return "Update not Completed : quottaion request is not exist";
         }
       
-   
+        grn.setBalance_amount(grn.getNet_amount());
         extGrnId.setUpdated_at(LocalDateTime.now());//set updated date and time
         extGrnId.setUpdated_user(userDao.getUserByUserName(auth.getName()).getId());
 
